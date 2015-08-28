@@ -1,0 +1,9 @@
+---
+
+- name: backports source is added
+  apt_repository: repo='deb {{debian_mirror}} jessie-backports main' state=present
+  register: apt_backports_repo
+
+- name: update apt when repo was newly added
+  apt: update_cache=yes
+  when: apt_backports_repo.changed

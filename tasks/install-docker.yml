@@ -9,10 +9,10 @@
     - docker
     - admin
 
-- name: ensure docker group exists
-  group: name=docker state=present
-
-- name: ensure admin user exists and is member of docker group
-  user: name=admin group=admin append=yes groups=docker state=present
+- name: ensure admin and harbormaster users exists and is member of docker group
+  user: name="{{item}}" group=admin append=yes groups=docker state=present
+  with_items:
+    - admin
+    - git
   notify: 
     - restart docker
